@@ -7,7 +7,7 @@ dashboardPagePlus(skin = "blue",
 
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Admin Overview", tabName = "overview", icon = icon("info-circle")),
+      menuItem("Order", tabName = "order", icon = icon("info-circle")),
       menuItem("Test", icon = icon("file-text-o"),
             menuSubItem("Test1", tabName = "test1", icon = icon("outdent")),
             menuSubItem("Test2", tabName = "test2", icon = icon("outdent"))
@@ -18,13 +18,13 @@ dashboardPagePlus(skin = "blue",
   dashboardBody(
     useShinyalert(),
     useShinyjs(),
-    # tabItems(
-    #   source(file.path("ui/normalization_tab_ui.R"),  local = TRUE)$value
-    # )
+    tabItems(
+      source(file.path("ui/order_tab_ui.R"),  local = TRUE)$value
+    )
   ),
-
+  
   dashboardFooter(
-    left_text = "Girish.Srinivas@basf.com", 
+    left_text = "1&ONLY Team - #cma-Challenge-CircularEconomy- CAMELOT", 
     right_text = "https://github.com/gsrnivas/bendiT"
   )
 )
