@@ -15,12 +15,6 @@ dashboardPagePlus(skin = "green",
   dashboardBody(
     useShinyalert(),
     useShinyjs(),
-    mainPanel(
-      bsModal(id = 'startupModal', title = 'Dum Dum', trigger = '',
-              size = 'large', p("here is my mumbo jumbo")),
-      width = 12
-    ),
-    # source(file.path("ui/startup_ui.R"),  local = TRUE)$value,
     tabItems(
       source(file.path("ui/order_tab_ui.R"),  local = TRUE)$value
     )
