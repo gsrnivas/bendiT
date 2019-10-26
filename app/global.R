@@ -1,5 +1,4 @@
 ## Packages -------------------------------------------------------
-# library(taRifx)
 library(httr)
 library(jsonlite)
 library(shiny)
