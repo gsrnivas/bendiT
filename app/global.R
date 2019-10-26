@@ -50,22 +50,26 @@ mongo_insert_data <- function(data, collection, db, url, verbose){
                      verbose = TRUE)
   
   # dump the data to mongo
-  
   message = mongo.con$insert(data)
-  
   # remove the mongo connection
   rm(mongo.con)
-  
   gc()
-  
   return(message)
-  
 }
 
 # Read data from the Excel file and move the data to mongo db
 #data <- fread("data/CIRCULAR-ECONOMY-DATASET-I.csv")
 # mongo_insert_data(data, collection,db,url,"TRUE")
 
+mongo.con <- mongo(collection , db, mongourl)
 
+# read data from mongo and convert to tibble format.
+# better way is to do the filter data in mongo but we will do this at a later stage of dev. whenever we need the information
+data <- mongo.con$find('{}') %>% as_tibble()
+
+# there are spaces in the names change this
+names(data)<-make.names(names(data),unique = TRUE)
+
+#data can be found here
 
 
