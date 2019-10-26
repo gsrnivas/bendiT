@@ -30,6 +30,8 @@ options(scipen=999)
 
 # Init env variables
 
+source("modules/helpers.R", local = TRUE)
+
 # Global Variables --------------------------------------------------------
 
 mongourl <- Sys.getenv("benditDB_url")
@@ -61,15 +63,27 @@ mongo_insert_data <- function(data, collection, db, url, verbose){
 #data <- fread("data/CIRCULAR-ECONOMY-DATASET-I.csv")
 # mongo_insert_data(data, collection,db,url,"TRUE")
 
-mongo.con <- mongo(collection , db, mongourl)
 
-# read data from mongo and convert to tibble format.
-# better way is to do the filter data in mongo but we will do this at a later stage of dev. whenever we need the information
-data <- mongo.con$find('{}') %>% as_tibble()
+get_data <- function(collection, db, mongourl){
+  
+  # connect to mongo
+  mongo.con <- mongo(collection , db, mongourl)
+  
+  # read data from mongo and convert to tibble format.
+  # better way is to do the filter data in mongo but we will do this at a later stage of dev. whenever we need the information
+  data <- mongo.con$find('{}') %>% as_tibble()
+  
+  # there are spaces in the names change this
+  names(data)<-make.names(names(data),unique = TRUE)
+  
+  # remove the mongo connection
+  rm(mongo.con)
+  gc()
+  return(data)
+}
 
-# there are spaces in the names change this
-names(data)<-make.names(names(data),unique = TRUE)
 
-#data can be found here
 
+#get_data check
+# data<- get_data(collection, db, mongourl)
 

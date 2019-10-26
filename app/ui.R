@@ -1,23 +1,26 @@
 
-dashboardPagePlus(skin = "blue", 
+dashboardPagePlus(skin = "green", 
               title = "BendiT", # Browser Tab Title
-              
   
   dashboardHeaderPlus(title = "BendiT Dev"), # Header Title
 
   dashboardSidebar(
     sidebarMenu(
       menuItem("Order", tabName = "order", icon = icon("info-circle")),
-      menuItem("Test", icon = icon("file-text-o"),
-            menuSubItem("Test1", tabName = "test1", icon = icon("outdent")),
-            menuSubItem("Test2", tabName = "test2", icon = icon("outdent"))
-            )
+      menuItem("Listing", tabName = "list", icon = icon("info-circle")),
+      menuItem("Admin", tabName = "admin", icon = icon("info-circle"))
     )
   ),
   
   dashboardBody(
     useShinyalert(),
     useShinyjs(),
+    mainPanel(
+      bsModal(id = 'startupModal', title = 'Dum Dum', trigger = '',
+              size = 'large', p("here is my mumbo jumbo")),
+      width = 12
+    ),
+    # source(file.path("ui/startup_ui.R"),  local = TRUE)$value,
     tabItems(
       source(file.path("ui/order_tab_ui.R"),  local = TRUE)$value
     )
