@@ -86,3 +86,31 @@ get_data <- function(collection, db, mongourl){
 #get_data check
 # data<- get_data(collection, db, mongourl)
 
+
+# Dynamically generate inputs ---------------------------------------------
+
+shinyInput <- function(FUN, ids, prefix, ...) {
+  inputs <- character(length(ids))
+  for (i in seq_len(length(ids))) {
+    inputs[i] <- as.character(FUN(paste0(prefix, i), ...))
+  }
+  inputs
+}
+
+bsButtonTooltip <- function(inputId, label, tooltip, placement = "top", ...) {
+  btn <- btn <- bsButton(inputId, label, ...)
+  btn %>% 
+    addAttribs(`data-toggle` ="tooltip") %>% 
+    addAttribs(`data-placement` = placement) %>% 
+    addAttribs(`title` = tooltip)
+}
+
+addAttribs <- function(tag, ...) {
+  a <- list(...)
+  for(i in seq(length(a))) {
+    tag$attribs[names(a)[i]] = a[[i]]
+  }
+  return(tag)
+}
+
+

@@ -19,12 +19,12 @@ tabItem(tabName = "order",
           div(
             class= "col-sm-12 col-md-9",
             boxPlus(
-              title ='Output',
+              title ='Available Material List',
               width = 12,
               status = "success",
               closable = FALSE,
               collapsible = TRUE,
-              verbatimTextOutput("code_output")
+              DT::dataTableOutput("order_listing_DT")
             )
           )
         )

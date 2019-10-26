@@ -1,8 +1,9 @@
 server <- function(input, output, session) {
   
   # Reactive Values --------------------------------------------------------
-  load_data <- reactiveValues(data = NULL)
+  load_data <- reactiveValues(data = NULL, order_list_table = NULL)
   load_data$data <- get_data(collection, db, mongourl)
+  
   
   # Source Server Files -----------------------------------------------------
   source(file.path("server/global_server.R"),  local = TRUE)$value
