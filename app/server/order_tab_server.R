@@ -67,7 +67,11 @@ observeEvent(input$order_listing, {
 
 myModal <- function(session) {
   ns <- session$ns
-  modalDialog(actionButton(ns("closeModalBtn"), "Close Modal"))
+  modalDialog(
+    footer = NULL,
+    size = "l",
+    actionButton(ns("closeModalBtn"), "Close")
+    )
 }
 
 observeEvent(input$closeModalBtn, { 
