@@ -7,8 +7,8 @@ dashboardPagePlus(skin = "green",
   dashboardSidebar(
     sidebarMenu(
       menuItem("Order", tabName = "order", icon = icon("info-circle")),
-      menuItem("Listing", tabName = "list", icon = icon("info-circle")),
-      menuItem("Admin", tabName = "admin", icon = icon("info-circle"))
+      menuItem("Listing", tabName = "list", icon = icon("info-circle"))
+      # menuItem("Admin", tabName = "admin", icon = icon("info-circle"))
     )
   ),
   

@@ -22,6 +22,7 @@ library(dplyr)
 library(heatmaply)
 library(scatterD3)
 library(mongolite)
+library(shinyalert)
 options(warn = -1)
 
 plan(multisession)

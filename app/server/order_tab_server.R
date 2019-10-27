@@ -78,7 +78,10 @@ myModal <- function(session) {
           disabled(selectizeInput('order_data_material_company', 'Company',multiple=TRUE,choices=NULL,selected = NULL)),
           disabled(selectizeInput('order_data_material_BUM', 'Units',multiple=TRUE,choices=NULL,selected = NULL)),
           disabled(selectizeInput('order_data_material_costs_per_unit', 'Cost per unit in $ ',multiple=TRUE,choices=NULL,selected = NULL)),
-          disabled(selectizeInput('order_data_material_units_order', 'Total units to order ',multiple=TRUE,choices=NULL,selected = NULL)),
+          textInput('order_data_material_units_order', 'Total units to order', placeholder = "Input a number"),
+          textInput('order_data_contact_name', 'Contact name', placeholder = "Your contact name here"),
+          textInput('order_data_contact_email', 'Contact email', placeholder = "Your email address here"),
+          uiOutput("payment_details"),
     
         fluidRow(
           column(4,
@@ -96,7 +99,24 @@ myModal <- function(session) {
 
 
 
+output$payment_details <- renderUI({
+  
+  req(input$order_data_material_units_order)
+  
+  htmlOutput("payment_details_display")
+})
 
+output$payment_details_display <- renderText({ 
+  
+  req(input$order_data_material_units_order)
+  dollar <- "\u20024"
+  
+  payment =  (as.numeric(input$order_data_material_units_order)) * (as.numeric(input$order_data_material_costs_per_unit))
+
+  str1<-paste0("",'<font size="5">', " Total costs is = ", payment, "$","</font>", "")
+  HTML(paste0(str1))
+  
+})
 
 
 
@@ -107,13 +127,22 @@ observeEvent(input$closeModalBtn, {
 
 observeEvent(input$select_button_order, {
   selectedRow <- as.numeric(strsplit(input$select_button_order, "_")[[1]][3])
-  load_data$order[selectedRow,]
+  df<- load_data$order[selectedRow,]
+  
+  product_cost = as.numeric(gsub("[^0-9.]", "", df$costs.of.product))
+  
+  # browser()
   
   showModal(myModal(session))
-  updateSelectizeInput(session, 'order_data_material_name', choices=c("A"),selected = "A" )
-  updateSelectizeInput(session, 'order_data_material_type', choices=c("A"),selected = "A" )
-  updateSelectizeInput(session, 'order_data_material_group', choices=c("A"),selected = "A" )
-  updateSelectizeInput(session, 'order_data_material_company', choices=c("A"),selected = "A" )
+  
+  updateSelectizeInput(session, 'order_data_material_name', choices= df$Material.Name, selected = df$Material.Name )
+  updateSelectizeInput(session, 'order_data_material_type', choices= df$Materia.Type, selected = df$Materia.Type )
+  updateSelectizeInput(session, 'order_data_material_group', choices= df$Materialgroup, selected = df$Materialgroup )
+  updateSelectizeInput(session, 'order_data_material_company', choices=df$company ,selected = df$company )
+  
+  updateSelectizeInput(session, 'order_data_material_BUM', choices= df$BUM, selected = df$BUM )
+  updateSelectizeInput(session, 'order_data_material_costs_per_unit', choices= product_cost, selected = product_cost )
+
   
 })
 
@@ -149,3 +178,14 @@ output$order_listing_DT <- renderDT({
   ) %>% 
     formatStyle(columns = table_columns, fontSize = '100%') 
 }) 
+
+
+# Order confirm  ------
+
+observeEvent(input$order_confirm, {
+  
+  shinyalert("Your order has been placed", "Confirmation will be notified shortly", type = "success")
+  removeModal() 
+  
+})
+  
