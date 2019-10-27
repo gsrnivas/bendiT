@@ -69,10 +69,36 @@ myModal <- function(session) {
   ns <- session$ns
   modalDialog(
     footer = NULL,
-    size = "l",
-    actionButton(ns("closeModalBtn"), "Close")
+    size = "m",
+    
+      HTML(info_order),
+          disabled(selectizeInput('order_data_material_name', 'Material Name',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_type', 'Material Type',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_group', 'Material Group',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_company', 'Company',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_BUM', 'Units',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_costs_per_unit', 'Cost per unit in $ ',multiple=TRUE,choices=NULL,selected = NULL)),
+          disabled(selectizeInput('order_data_material_units_order', 'Total units to order ',multiple=TRUE,choices=NULL,selected = NULL)),
+    
+        fluidRow(
+          column(4,
+        actionButton("order_confirm", "Confirm Order")
+          ),
+        column(6,
+        actionButton(ns("closeModalBtn"), "Close")
+          )
+        
+        )
     )
+  
 }
+
+
+
+
+
+
+
 
 observeEvent(input$closeModalBtn, { 
   removeModal() 
@@ -84,6 +110,10 @@ observeEvent(input$select_button_order, {
   load_data$order[selectedRow,]
   
   showModal(myModal(session))
+  updateSelectizeInput(session, 'order_data_material_name', choices=c("A"),selected = "A" )
+  updateSelectizeInput(session, 'order_data_material_type', choices=c("A"),selected = "A" )
+  updateSelectizeInput(session, 'order_data_material_group', choices=c("A"),selected = "A" )
+  updateSelectizeInput(session, 'order_data_material_company', choices=c("A"),selected = "A" )
   
 })
 

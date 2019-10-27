@@ -113,4 +113,7 @@ addAttribs <- function(tag, ...) {
   return(tag)
 }
 
+#-----------------------------------------------------------------------------
 
+info_order <- 
+  "<p><b> Join us in the Industrial Symbiosis! </b>. </p>"
